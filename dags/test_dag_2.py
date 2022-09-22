@@ -4,7 +4,7 @@ from airflow import DAG
 from airflow.decorators import task
 
 with DAG(
-        dag_id='example_python_operator',
+        dag_id='test_dag_2',
         schedule=None,
         start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
         catchup=False,
@@ -28,13 +28,8 @@ with DAG(
         from requests_html import HTMLSession
         import jinja2
         from datetime import datetime
-        from config import TOPIC, MAX_ARTICLES, TEMPLATE_FILE, OUTPUT_HTML
-        from scratch import set_global_ssl, download_nltk_resources, create_news_summary_output
-        print(TOPIC, MAX_ARTICLES, TEMPLATE_FILE, OUTPUT_HTML)
-        OUTPUT_HTML = f'/opt/airflow/dags/{OUTPUT_HTML}'
-        set_global_ssl()
-        download_nltk_resources()
-        create_news_summary_output(TOPIC, TEMPLATE_FILE,OUTPUT_HTML, MAX_ARTICLES)
+        from scratch import get_all_the_links_from_google_news
+        get_all_the_links_from_google_news('news in inida',2)
 
 
     virtualenv_task = callable_virtualenv()

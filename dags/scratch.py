@@ -58,12 +58,13 @@ def get_all_the_links_from_google_news(topic, max_articles=10):
     with HTMLSession() as session:
         res = session.get(url)
         res.html.render()
-    page = BeautifulSoup(res.text, 'html.parser')
-    links = [a.get('href') for a in page.find_all('a', {'jsname': "YKoRaf", 'class': 'WlydOe'})]
-    return links[:max_articles]
+        print(res.html.browser)
+    # page = BeautifulSoup(res.text, 'html.parser')
+    # links = [a.get('href') for a in page.find_all('a', {'jsname': "YKoRaf", 'class': 'WlydOe'})]
+    # return links[:max_articles]
 
 
-def create_news_summary_output(topic, template_file_path,max_articles=5,):
+def create_news_summary_output(topic, template_file_path,output_file_path,max_articles=5,):
     articles = [get_news_from_article(url) for url in get_all_the_links_from_google_news(topic, max_articles)]
     articles = [a for a in articles if (a and a.summary != '')]
 
@@ -77,7 +78,7 @@ def create_news_summary_output(topic, template_file_path,max_articles=5,):
     }
     with open(OUTPUT_HTML, mode="w", encoding="utf-8") as output_page:
         output_page.write(template.render(context))
-        print(f"wrote {OUTPUT_HTML}")
+        print(f"wrote {output_file_path}")
 
 
 if __name__ == '__main__':
@@ -99,4 +100,5 @@ if __name__ == '__main__':
     # print(len(get_all_the_links_from_google_news(topic,max_articles)))
 
     ## Creating a list of articles
-    create_news_summary_output(TOPIC, TEMPLATE_FILE,MAX_ARTICLES)
+    get_all_the_links_from_google_news(TOPIC, MAX_ARTICLES)
+# create_news_summary_output(TOPIC, TEMPLATE_FILE,OUTPUT_HTML,MAX_ARTICLES)
