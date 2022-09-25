@@ -1,7 +1,7 @@
 # Automated Report Generation Using Python and Airflow
 
 ## Objective 
-To create an Reporting ETL pipeline using Airflow and Python and share in particular intervals.
+To create an Reporting ETL pipeline using Airflow and Python and update after particular intervals.
 
 ## Tools used
 - Python
