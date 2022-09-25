@@ -3,7 +3,7 @@ from newspaper import Article
 import ssl
 import jinja2
 from datetime import datetime
-from pipeline_config import *
+# from pipeline_config import *
 from gnews import GNews
 
 
@@ -49,7 +49,7 @@ def get_news_from_article(url):
 
 def get_all_the_links_from_google_news(topic, max_articles=5):
     print(f'Getting all the news links for {topic}')
-    news = GNews(language='en', country='India', period='1d', max_results=max_articles)
+    news = GNews(language='en', country='IN', period='1d', max_results=max_articles)
     links = [article['url'] for article in news.get_news(topic)]
     print(f'Got {len(links)} links')
     return links
@@ -67,7 +67,7 @@ def create_news_summary_output(topic, template_text, output_file_path, max_artic
         "today": datetime.today().strftime('%b %d, %Y')
     }
 
-    with open(OUTPUT_HTML, mode="w", encoding="utf-8") as output_page:
+    with open(output_file_path, mode="w", encoding="utf-8") as output_page:
         output_page.write(template.render(context))
         print(f"wrote {output_file_path}")
 
@@ -75,24 +75,17 @@ def create_news_summary_output(topic, template_text, output_file_path, max_artic
 
 
 if __name__ == '__main__':
-    pass
-    # Global configs
-    # set_global_ssl()
-    # download_nltk_resources()
-
-    ## testing newspaper3k
-    # url = 'https://www.hindustantimes.com/india-news/skill-development-the-way-forward-for-new-india-pm-to-iti-students-101663437733979.html'
-    # url = 'news.google.com/./articles/CAIiEKRJx1MS6qn_5NNxbi5cb9QqFwgEKg4IACoGCAoww7k_MMevCDCj7PkG?uo=CAUibmh0dHBzOi8vd3d3LmhpbmR1c3RhbnRpbWVzLmNvbS9pbmRpYS1uZXdzL2hvdy1pbmRpYS1wbGFucy10by1zb2x2ZS1pdHMtbG9naXN0aWNzLWdyaWRsb2NrLTEwMTY2MzY1MjY5OTUyOS5odG1s0gEA&hl=en-IN&gl=IN&ceid=IN%3Aen'
-    # article = get_news_from_article(url)
-    # print(article.authors)
-    # print(article.publish_date)
-    # print(article.title)
-    # print(article.top_image)
-    # print(article.summary)
-
-    ## Getting links of all the articles
-    # print(len(get_all_the_links_from_google_news(topic,max_articles)))
-
-    ## Creating a list of articles
-    # get_all_the_links_from_google_news(TOPIC, MAX_ARTICLES)
-    # create_news_summary_output(TOPIC, TEMPLATE_FILE, OUTPUT_HTML, MAX_ARTICLES)
+    set_global_ssl()
+    download_nltk_resources()
+    TOPIC = 'news in india'
+    TEMPLATE_FILE_PATH = '/Users/pavelchowdhury/Documents/automated_report_generation/dags/news_template.html'
+    OUTPUT_FILE_PATH = '/Users/pavelchowdhury/Documents/automated_report_generation/dags/NewsSummary.html'
+    # links = get_all_the_links_from_google_news(topic=TOPIC, max_articles=3)
+    # articles = [get_news_from_article(link) for link in links]
+    # articles = [article for article in articles if (article and article.summary)]
+    # for a in articles:
+    #     print(a.title, a.summary, a.top_image, sep='\n')
+    with open(TEMPLATE_FILE_PATH, 'r') as file:
+        TEMPLATE_TEXT = file.read()
+    create_news_summary_output(topic=TOPIC, template_text=TEMPLATE_TEXT, output_file_path=OUTPUT_FILE_PATH,
+                               max_articles=5)
