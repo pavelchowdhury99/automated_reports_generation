@@ -34,3 +34,7 @@ To create an Reporting ETL pipeline using Airflow and Python and update after pa
 6. [Docker references](https://docs.docker.com/reference/)
 7. [Airflow Python Operator](https://airflow.apache.org/docs/apache-airflow/stable/howto/operator/python.html)
 8. [Airflow Documentation](https://airflow.apache.org/docs/)
+
+
+## Walkthrough
+[![How to generate automated reports using Python & Airflow? | Report automation with Python](https://yt-embed.herokuapp.com/embed?v=7GIr71X9_tc)](https://youtu.be/7GIr71X9_tc "How to generate automated reports using Python & Airflow? | Report automation with Python")
